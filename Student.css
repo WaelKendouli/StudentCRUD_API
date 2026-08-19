@@ -1,0 +1,255 @@
+:root {
+        color-scheme: dark;
+      }
+
+      /* ✅ Predictable sizing: padding/border included in width/height */
+      * {
+        box-sizing: border-box;
+      }
+
+      /* ✅ Page background + global font */
+      body {
+        margin: 0;
+        padding: 24px;
+        font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial,
+          sans-serif;
+        background: #0b1020;
+        color: #e9eefc;
+      }
+
+      /* ✅ Center the app and limit max width */
+      .app {
+        max-width: 1100px;
+        margin: 0 auto;
+      }
+
+      /* ✅ Reusable card container */
+      .card {
+        background: rgba(255, 255, 255, 0.06);
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        border-radius: 18px;
+        padding: 18px;
+      }
+
+      /* ✅ Top bar: title + right buttons/info */
+      .topbar {
+        display: flex;
+        gap: 12px;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 14px;
+      }
+
+      /* ✅ Title size */
+      h1 {
+        font-size: 18px;
+        margin: 0;
+      }
+
+      /* ✅ Muted text helper */
+      .muted {
+        opacity: 0.75;
+      }
+
+      /* ✅ Horizontal row layout */
+      .row {
+        display: flex;
+        gap: 12px;
+        flex-wrap: wrap;
+        align-items: center;
+      }
+
+      /* ✅ Two-column layout:
+         - Left: list/search
+         - Right: add form
+      */
+      .grid {
+        display: grid;
+        grid-template-columns: 1.1fr 0.9fr;
+        gap: 12px;
+      }
+
+      /* ✅ On small screens: stack into one column */
+      @media (max-width: 900px) {
+        .grid {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      /* ✅ Shared form styles (inputs/select/textarea) */
+      input,
+      select,
+      textarea {
+        width: 100%;
+        background: rgba(0, 0, 0, 0.25);
+        border: 1px solid rgba(255, 255, 255, 0.16);
+        color: #e9eefc;
+        border-radius: 12px;
+        padding: 10px 12px;
+        outline: none;
+      }
+
+      /* ✅ Label style */
+      label {
+        font-size: 12px;
+        opacity: 0.85;
+        display: block;
+        margin: 10px 0 6px;
+      }
+
+      /* ✅ Buttons base style */
+      button {
+        border: 0;
+        border-radius: 12px;
+        padding: 10px 14px;
+        cursor: pointer;
+        background: #4f7cff;
+        color: white;
+        font-weight: 700;
+      }
+
+      /* ✅ Secondary button */
+      button.secondary {
+        background: rgba(255, 255, 255, 0.12);
+      }
+
+      /* ✅ Danger button (delete) */
+      button.danger {
+        background: #ff4f6d;
+      }
+
+      /* ✅ Disabled look */
+      button:disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+      }
+
+      /* ✅ List container */
+      .list {
+        display: grid;
+        gap: 10px;
+        margin-top: 10px;
+      }
+
+      /* ✅ One student card */
+      .item {
+        padding: 12px;
+        border-radius: 14px;
+        background: rgba(0, 0, 0, 0.18);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        display: grid;
+        grid-template-columns: 1fr auto;
+        gap: 10px;
+        align-items: start;
+      }
+
+      /* ✅ Student name */
+      .name {
+        font-weight: 900;
+        margin: 0 0 4px;
+      }
+
+      /* ✅ Student meta text (email, etc.) */
+      .meta {
+        margin: 0;
+        opacity: 0.8;
+        line-height: 1.45;
+      }
+
+      /* ✅ Pill badge (id/major/gpa) */
+      .pill {
+        display: inline-block;
+        padding: 3px 10px;
+        border-radius: 999px;
+        font-size: 12px;
+        background: rgba(255, 255, 255, 0.1);
+        border: 1px solid rgba(255, 255, 255, 0.14);
+        opacity: 0.9;
+        margin-right: 6px;
+        margin-top: 6px;
+      }
+
+      /* ✅ Buttons container inside student card */
+      .actions {
+        display: flex;
+        gap: 8px;
+      }
+
+      /* ✅ Smaller buttons for Edit/Delete */
+      .actions button {
+        padding: 8px 10px;
+        font-size: 13px;
+      }
+
+      /* ✅ Loading status row */
+      .status {
+        display: flex;
+        gap: 10px;
+        align-items: center;
+        margin-top: 8px;
+      }
+
+      /* ✅ Spinner circle */
+      .spinner {
+        width: 16px;
+        height: 16px;
+        border-radius: 999px;
+        border: 2px solid rgba(255, 255, 255, 0.25);
+        border-top-color: white;
+        animation: spin 0.85s linear infinite;
+      }
+
+      /* ✅ Spinner animation */
+      @keyframes spin {
+        to {
+          transform: rotate(360deg);
+        }
+      }
+
+      /* ✅ Toast message (bottom-right) */
+      .toast {
+        position: fixed;
+        right: 18px;
+        bottom: 18px;
+        background: rgba(0, 0, 0, 0.55);
+        border: 1px solid rgba(255, 255, 255, 0.18);
+        backdrop-filter: blur(10px);
+        padding: 12px 14px;
+        border-radius: 14px;
+        display: none;
+        max-width: 360px;
+        line-height: 1.35;
+      }
+
+      /* ✅ Backdrop for modal */
+      .backdrop {
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.55);
+        display: none; /* ✅ shown only when editing */
+        align-items: center;
+        justify-content: center;
+        padding: 18px;
+      }
+
+      /* ✅ Modal box */
+      .modal {
+        width: min(720px, 100%);
+        background: rgba(12, 16, 32, 0.98);
+        border: 1px solid rgba(255, 255, 255, 0.14);
+        border-radius: 18px;
+        padding: 16px;
+      }
+
+      /* ✅ Modal title */
+      .modal h2 {
+        margin: 0 0 6px;
+        font-size: 16px;
+      }
+
+      /* ✅ Modal buttons row */
+      .modal .row {
+        justify-content: flex-end;
+        margin-top: 12px;
+      }
