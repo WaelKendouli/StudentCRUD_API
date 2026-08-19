@@ -175,7 +175,7 @@ return text ? JSON.parse(text) : null ;
             const users = await apiFetch(LIST_URL , {method : "GET"});
             students = users.map((u) => ({
             id: u.id,
-            fullName: u.name,
+            fullname: u.name,
             email: u.email,
             major: MAJORS[u.id % MAJORS.length], // ✅ deterministic "random" major
             gpa: clampGpa(2.6 + (u.id % 15) * 0.1), // ✅ deterministic, looks random-ish
@@ -192,11 +192,11 @@ return text ? JSON.parse(text) : null ;
 
      async function CreateStudent()
      {
-        const Fullname = UI.addName.value.trim();
+        const fullname = UI.addName.value.trim();
         const email = UI.addEmail.value.trim();
         const major = UI.addMajor.value;
         const gpa = clampGpa(UI.addGpa.value);
-        if (!fullName) return showToast("❌ Name is required");
+        if (!fullname) return showToast("❌ Name is required");
         if (!email || !email.includes("@"))
           return showToast("❌ Valid email is required");
 
@@ -206,11 +206,11 @@ return text ? JSON.parse(text) : null ;
         try {
 const created = await apiFetch(`${API_BASE}/users` , {
     method : "POST" ,
-    body: JSON.stringify({ name: fullName, email, major, gpa }),
+    body: JSON.stringify({ name: fullname, email, major, gpa }),
 });
 const newStudent = {
             id: created?.id ?? Date.now(), // ✅ API may return id; fallback to timestamp
-            fullName,
+            fullname,
             email,
             major,
             gpa,
@@ -228,11 +228,10 @@ const newStudent = {
         setError(`Creation failed ${e.message}`);
         }
         finally {
-            UI.btnAdd.disabled = true;
+            UI.btnAdd.disabled = false;
         }
      }
 
      loadStudents();
-UI.btnAdd.addEventListener(()=> {
-    CreateStudent();
-});
+UI.btnAdd.addEventListener("click",
+    CreateStudent);
