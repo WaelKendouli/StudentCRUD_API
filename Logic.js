@@ -98,6 +98,59 @@ function setError(message) {
         return Math.min(4, Math.max(0, Math.round(n * 10) / 10));
       }
 
+ function render() {
+        // ✅ Read search query
+        const q = UI.search.value.trim().toLowerCase();
+
+        // ✅ Filter list if query exists
+        const filtered = q
+          ? students.filter(
+              (s) =>
+                s.fullName.toLowerCase().includes(q) ||
+                s.email.toLowerCase().includes(q) ||
+                s.major.toLowerCase().includes(q)
+            )
+          : students;
+
+        // ✅ Update "X shown" label
+        UI.count.textContent = `${filtered.length.toLocaleString()} shown`;
+
+        // ✅ Build list HTML
+        UI.list.innerHTML = filtered
+          .map(
+            (s) => `
+        <div class="item">
+          <div>
+            <div class="name">${esc(s.fullName)}</div>
+            <p class="meta">${esc(s.email)}</p>
+
+            <div style="margin-top:6px;">
+              <span class="pill">id: ${s.id}</span>
+              <span class="pill">Major: ${esc(s.major)}</span>
+              <span class="pill">GPA: ${Number(s.gpa).toFixed(1)}</span>
+            </div>
+          </div>
+
+          <div class="actions">
+            <!-- ✅ Inline onclick calls global functions exposed below -->
+            <button class="secondary" onclick="window.__editStudent(${
+              s.id
+            })">Edit</button>
+            <button class="danger" onclick="window.__delStudent(${
+              s.id
+            })">Delete</button>
+          </div>
+        </div>
+      `
+          )
+          .join("");
+
+        // ✅ If nothing found, show a friendly message
+        if (filtered.length === 0) {
+          UI.list.innerHTML = `<div class="muted">No students found.</div>`;
+        }
+      }
+
       async function apiFetch(url,options = {})
       {
             const res = await fetch(url ,
@@ -113,3 +166,35 @@ function setError(message) {
         const text = await res.text();
 return text ? JSON.parse(text) : null ;
       } 
+
+      async function loadStudents() {
+        UI.btnReload.disabled = true;
+        setError("");
+        setLoading(true);
+            try {
+            const users = await apiFetch(LIST_URL , {method : "GET"});
+            students = users.map((u) => ({
+            id: u.id,
+            fullName: u.name,
+            email: u.email,
+            major: MAJORS[u.id % MAJORS.length], // ✅ deterministic "random" major
+            gpa: clampGpa(2.6 + (u.id % 15) * 0.1), // ✅ deterministic, looks random-ish
+          }));
+            render();
+             showToast("✅ Loaded students");
+        } catch (e) {
+          setError(`❌ Failed to load students: ${e.message}`);
+        } finally {
+          setLoading(false);
+          UI.btnReload.disabled = false;
+        }
+      }
+
+     async function CreateStudent()
+     {
+        const Fullname = UI.addName.value.trim();
+        const email = UI.addEmail.value.trim();
+        const major = UI.addMajor.value;
+        const gpa = clampGpa(UI.addGpa.value);
+     }
+
