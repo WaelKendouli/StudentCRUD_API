@@ -9,6 +9,155 @@
 </head>
 <body>
 	
+     <div class="app">
+      <div class="card">
+        <!-- ✅ Header: title + API info + reload -->
+        <div class="topbar">
+          <div>
+            <h1>Students CRUD Demo (Fetch + async/await)</h1>
+            <div class="muted">
+              Simulated students data built from a public API response
+            </div>
+          </div>
+
+          <div class="row">
+            <span class="pill" id="apiInfo"
+              >GET /users (mapped to Students)</span
+            >
+            <button class="secondary" id="btnReload">Reload</button>
+          </div>
+        </div>
+
+        <div class="grid">
+          <!-- ======================================================
+               ✅ Left Side: Students list + search
+               ====================================================== -->
+          <section>
+            <div class="row" style="justify-content: space-between">
+              <div class="row">
+                <strong>Students</strong>
+                <span class="muted" id="count"></span>
+              </div>
+
+              <div class="row">
+                <input
+                  id="search"
+                  placeholder="Search name or email…"
+                  style="width: 280px"
+                />
+              </div>
+            </div>
+
+            <!-- ✅ Loading area (hidden by default) -->
+            <div class="status muted" id="loading" style="display: none">
+              <div class="spinner"></div>
+              <div>Loading…</div>
+            </div>
+
+            <!-- ✅ Error text (hidden by default) -->
+            <div
+              class="muted"
+              id="error"
+              style="margin-top: 10px; display: none"
+            ></div>
+
+            <!-- ✅ Students will be rendered here -->
+            <div class="list" id="list"></div>
+          </section>
+
+          <!-- ======================================================
+               ✅ Right Side: Add Student form
+               ====================================================== -->
+          <section class="card" style="padding: 14px">
+            <strong>Add New Student</strong>
+            <div class="muted" style="margin-top: 6px">
+              Sends a POST request (demo). Student is added to local list so
+              CRUD feels real.
+            </div>
+
+            <label for="addName">Full Name</label>
+            <input id="addName" placeholder="e.g., Omar Abu-Hadhoud" />
+
+            <label for="addEmail">Email</label>
+            <input id="addEmail" placeholder="e.g., omar@example.com" />
+
+            <label for="addMajor">Major</label>
+            <select id="addMajor">
+              <option value="Computer Science">Computer Science</option>
+              <option value="Software Engineering">Software Engineering</option>
+              <option value="Information Systems">Information Systems</option>
+              <option value="Cybersecurity">Cybersecurity</option>
+              <option value="Data Science">Data Science</option>
+            </select>
+
+            <label for="addGpa">GPA (0.0 – 4.0)</label>
+            <input
+              id="addGpa"
+              type="number"
+              min="0"
+              max="4"
+              step="0.1"
+              value="3.2"
+            />
+
+            <div
+              class="row"
+              style="margin-top: 12px; justify-content: flex-end"
+            >
+              <button class="secondary" id="btnClear">Clear</button>
+              <button id="btnAdd">Create (POST)</button>
+            </div>
+
+            <div class="muted" style="margin-top: 10px">
+              Tip: In real APIs, students would be stored in your backend
+              database.
+            </div>
+          </section>
+        </div>
+      </div>
+    </div>
+
+    <!-- =========================================================
+         ✅ Edit Modal (shown when editing a student)
+         ========================================================= -->
+    <div class="backdrop" id="backdrop" aria-hidden="true">
+      <div
+        class="modal"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="modalTitle"
+      >
+        <h2 id="modalTitle">Edit Student</h2>
+        <div class="muted" id="editMeta" style="margin-bottom: 10px"></div>
+
+        <label for="editName">Full Name</label>
+        <input id="editName" />
+
+        <label for="editEmail">Email</label>
+        <input id="editEmail" />
+
+        <label for="editMajor">Major</label>
+        <select id="editMajor">
+          <option value="Computer Science">Computer Science</option>
+          <option value="Software Engineering">Software Engineering</option>
+          <option value="Information Systems">Information Systems</option>
+          <option value="Cybersecurity">Cybersecurity</option>
+          <option value="Data Science">Data Science</option>
+        </select>
+
+        <label for="editGpa">GPA (0.0 – 4.0)</label>
+        <input id="editGpa" type="number" min="0" max="4" step="0.1" />
+
+        <div class="row">
+          <button class="secondary" id="btnCancel">Cancel</button>
+          <button id="btnUpdate">Update (PUT)</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ✅ Toast message container -->
+    <div class="toast" id="toast"></div>
+
 
 </body>
 </html>
