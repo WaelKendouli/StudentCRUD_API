@@ -97,3 +97,19 @@ function setError(message) {
         if (Number.isNaN(n)) return 0;
         return Math.min(4, Math.max(0, Math.round(n * 10) / 10));
       }
+
+      async function apiFetch(url,options = {})
+      {
+            const res = await fetch(url ,
+               { headers : {
+                "Content-Type" : "application/json" ,
+                ...(options.headers || {}) ,
+
+               },
+               ...options
+            }
+            );
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        const text = await res.text();
+return text ? JSON.parse(text) : null ;
+      } 
