@@ -66,3 +66,34 @@ function setError(message) {
         UI.error.textContent = message;
         UI.error.style.display = message ? "block" : "none";
       }
+
+
+      function openModal() {
+        UI.backdrop.style.display = "flex";
+        UI.backdrop.setAttribute("aria-hidden", "false");
+      }
+
+      // ✅ Close the edit modal and reset editing state
+      function closeModal() {
+        UI.backdrop.style.display = "none";
+        UI.backdrop.setAttribute("aria-hidden", "true");
+        editingId = null;
+      }
+
+      // ✅ Escape text before injecting into innerHTML (basic safety)
+      // Prevents user input from becoming real HTML
+      function esc(s) {
+        return String(s)
+          .replaceAll("&", "&amp;")
+          .replaceAll("<", "&lt;")
+          .replaceAll(">", "&gt;")
+          .replaceAll('"', "&quot;")
+          .replaceAll("'", "&#039;");
+      }
+
+      // ✅ GPA helper: keep number between 0.0 and 4.0 and rounded to 1 decimal
+      function clampGpa(value) {
+        const n = Number(value);
+        if (Number.isNaN(n)) return 0;
+        return Math.min(4, Math.max(0, Math.round(n * 10) / 10));
+      }
