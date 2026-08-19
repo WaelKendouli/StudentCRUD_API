@@ -233,3 +233,6 @@ const newStudent = {
      }
 
      loadStudents();
+UI.btnAdd.addEventListener(()=> {
+    CreateStudent();
+});
