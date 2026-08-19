@@ -196,5 +196,40 @@ return text ? JSON.parse(text) : null ;
         const email = UI.addEmail.value.trim();
         const major = UI.addMajor.value;
         const gpa = clampGpa(UI.addGpa.value);
+        if (!fullName) return showToast("❌ Name is required");
+        if (!email || !email.includes("@"))
+          return showToast("❌ Valid email is required");
+
+        UI.btnAdd.disabled = true;
+        setError("");
+
+        try {
+const created = await apiFetch(`${API_BASE}/users` , {
+    method : "POST" ,
+    body: JSON.stringify({ name: fullName, email, major, gpa }),
+});
+const newStudent = {
+            id: created?.id ?? Date.now(), // ✅ API may return id; fallback to timestamp
+            fullName,
+            email,
+            major,
+            gpa,
+          };
+          students.unshift(newStudent);
+           UI.addName.value = "";
+          UI.addEmail.value = "";
+          UI.addMajor.value = "Computer Science";
+          UI.addGpa.value = "3.2";
+          render();
+          showToast("New Student Added successfully!");
+
+        }
+        catch(e) {
+        setError(`Creation failed ${e.message}`);
+        }
+        finally {
+            UI.btnAdd.disabled = true;
+        }
      }
 
+     loadStudents();
